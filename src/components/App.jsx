@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect} from 'react';
 
 
 import ImageGallery from "./ImageGallery/ImageGallery";
@@ -9,16 +9,57 @@ import Searchbar from "./Searchbar/Searchbar";
 import fetchPhotos from 'components/API/API';
 
 
- export class App extends Component {
-  state = {
-    searchQuery: '',
-    data: [],
-    page: 1,
-    imagesOnPage: 0,
-    error: null,
-    status: 'idle',
-    showBtn: false,
-  };
+ const App = ()=> {
+  const[searchQuery, setSearchQuery] = useState('');
+  const[data, setData] = useState([]);
+  const[page, setPage] = useState(1);
+  const[error, setError] = useState('');
+  const[status, setStatus] = useState('idle');
+  const [showBtn, setShowBtn] = useState(false);
+
+  console.log(error);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchQuery) {
+        return;
+      }
+      try {
+        setStatus('pending');
+        const { totalHits, hits } = await fetchPhotos(searchQuery, page);
+        setData(prevData => [...prevData, ...hits]);
+        setShowBtn(page < Math.ceil(totalHits / 12));
+        setStatus('resolved');
+      } catch (error) {
+        setError(error);
+        setStatus('rejected');
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  }, [searchQuery, page]);
+  return (
+    <>
+    <Searchbar onSubmit={this.handleSearchSubmit} />
+     <div className="container">
+      <ImageGallery dataImages={data} />
+          {showBtn && <Button onClick={this.incrementPage} />}
+          {status === 'pending' && <Loader />}
+          {status === 'rejected' && (
+            <div className="info">
+              За вашим запитом нічого не знайдено
+            </div>
+          )}
+     </div>
+    </>
+  );
+};
+
+
+
+ export default App;
+
+
 
   async componentDidUpdate(_, prevState) {
     const { searchQuery, page } = this.state;
@@ -58,20 +99,4 @@ import fetchPhotos from 'components/API/API';
 
   render(){
     const { data, status, showBtn } = this.state;
-  return (
-    <>
-    <Searchbar onSubmit={this.handleSearchSubmit} />
-     <div className="container">
-      <ImageGallery dataImages={data} />
-          {showBtn && <Button onClick={this.incrementPage} />}
-          {status === 'pending' && <Loader />}
-          {status === 'rejected' && (
-            <div className="info">
-              За вашим запитом нічого не знайдено
-            </div>
-          )}
-     </div>
-    </>
-  );
-};
-}
+ 
