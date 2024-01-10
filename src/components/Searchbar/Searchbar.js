@@ -28,9 +28,9 @@ const SearchBar = ({ onSubmit }) => {
     <>
       <header className={css.SearchBar}>
         <form className={css.Form} onSubmit={handleSearchSubmit}>
-          {/* <button type="submit" className={css.Button}>
+          <button type="submit" className={css.Button}>
             <AiOutlineSearch style={{ width: '25px', height: '25px' }} />
-          </button> */}
+          </button>
 
           <input
             className={css.Input}
