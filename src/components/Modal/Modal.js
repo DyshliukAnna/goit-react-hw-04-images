@@ -18,23 +18,22 @@ const Modal = ({ onClose, largeImageURL }) => {
     };
   }, [onClose]);
 
- 
-  const handleClickOutside = ({ target: { className }}) => {
+  const handleClickOutside = ({ target: { className } }) => {
     if (className !== 'Overlay') {
       return;
     }
 
     onClose();
   };
-    return (
-      <>
-        <div className={css.Overlay} onClick={handleClickOutside}>
-          <div className={css.Modal}>
-            <img src={largeImageURL} alt="" width={750} height={550} />
-          </div>
+  return (
+    <>
+      <div className={css.Overlay} onClick={handleClickOutside}>
+        <div className={css.Modal}>
+          <img src={largeImageURL} alt="" width={750} height={550} />
         </div>
-      </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default Modal;

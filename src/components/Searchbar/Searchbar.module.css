@@ -1,26 +1,20 @@
-.SearchBar{
-    background-color: #3f51b5;
-    /* height: 40px; */
-
+.SearchBar {
+  background-color: #3f51b5;
+  /* height: 40px; */
 }
-.Form{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.Form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-    /* padding: 0 auto; */
-
+  /* padding: 0 auto; */
 }
-.Button{
-    color: rgb(58, 55, 55);
-
-
+.Button {
+  color: rgb(58, 55, 55);
 }
-.Input{
-    display: flex;
-    background-color: #fff;
-width: 400px;
-height: 40px;
-
-
+.Input {
+  display: flex;
+  background-color: #fff;
+  width: 400px;
+  height: 40px;
 }
