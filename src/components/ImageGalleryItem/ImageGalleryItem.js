@@ -1,31 +1,23 @@
 import css from './ImageGalleryItem.module.css';
-import { Component } from 'react';
+import { useState } from 'react';
 import  Modal  from '../Modal/Modal';
 
-class ImageGalleryItem extends Component {
-    state = {
-        toggleModal: false,
-      };
+const ImageGalleryItem =({ id, webformatURL, largeImageURL })=> {
+  const [togleModal, setTogleModal]=useState(false)
     
-      toggleModal = (e, largeImageURL) => {
-        this.setState({ toggleModal: !this.state.toggleModal, largeImageURL });
+      const handleToggleModal = () => {
+        setTogleModal(!togleModal);
       };
-
-    render() {
-
-    const { id, webformatURL, largeImageURL } = this.props;
-    const { toggleModal } = this.state;
 
         return (
         <>
          <li className ={css.ImageGalleryItem} key={id}>
-            <img key={id} src ={webformatURL} alt ="" onClick={e => this.toggleModal(e, largeImageURL)}/>
+            <img className ={css.ImageGalleryItem_image} key={id} src ={webformatURL} alt ="" onClick={handleToggleModal}/>
          </li>
-         {toggleModal && (
-          <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
+         {togleModal && (
+          <Modal largeImageURL={largeImageURL} onClose={handleToggleModal} />
         )}
         </>
      );
  }
-}
 export default ImageGalleryItem;
